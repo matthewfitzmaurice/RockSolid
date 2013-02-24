@@ -1,0 +1,47 @@
+﻿<RockSolidOffice:OfficeDialog x:Class="RockSolidOffice.ProposalDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:RockSolidOffice="clr-namespace:RockSolidOffice"
+        Title="RockSolid Proposal" 
+        SizeToContent="WidthAndHeight"
+        Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
+        MinHeight="230" MaxHeight="230" MinWidth="550" MaxWidth="550">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="ColLeftRegion" Width="150"/>
+            <ColumnDefinition Name="ColMidRegion" Width="*" MinWidth="150"/>
+            <ColumnDefinition Name="ColRightRegion" Width="{Binding ElementName=RightRegion, Path=Width}" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Name="lblClientName" Content="Client name:" Grid.Row="0" Grid.Column="0" Margin="0,5,0,5" />
+        <TextBox Name="txtClientName" Grid.Row="0" Grid.Column="1" Margin="0,5,0,5" />
+
+        <Label Name="lblClientAbbreviatedName" Content="Client abbreviated name:" Grid.Row="1" Grid.Column="0" Margin="0,5,0,5" />
+        <TextBox Name="txtClientAbbreviatedName" Grid.Row="1" Grid.Column="1" Margin="0,5,0,5" />
+
+        <Label Name="lblClientAddress" Content="Client address:" Grid.Row="2" Grid.Column="0" Margin="0,5,0,5" />
+        <TextBox Name="txtClientAddress" Grid.Row="2" Grid.Column="1" Margin="0,5,0,5" />
+
+        <Label Name="lblProposalDate" Content="Proposal date:" Grid.Row="3" Grid.Column="0" Margin="0,5,0,5" />
+        <TextBox Name="txtProposalDate" Grid.Row="3" Grid.Column="1" Margin="0,5,0,5" />
+
+        <Label Name="lblAcceptanceDate" Content="Acceptance date:" Grid.Row="4" Grid.Column="0" Margin="0,5,0,5" />
+        <TextBox Name="txtAcceptanceDate" Grid.Row="4" Grid.Column="1" Margin="0,5,0,5" />
+
+        <StackPanel Name="RightRegion" Grid.Column="2" Grid.RowSpan="3">
+            <Button Name="btnOK" Width="75" Height="23" Margin="5" Click="OK_Click" IsDefault="True" HorizontalAlignment="Right" >OK</Button>
+            <Button Name="btnCancel" Width="75" Height="23" Margin="5" Click="Cancel_Click" IsCancel="True" HorizontalAlignment="Right" >Cancel</Button>
+        </StackPanel>
+
+    </Grid>
+</RockSolidOffice:OfficeDialog>

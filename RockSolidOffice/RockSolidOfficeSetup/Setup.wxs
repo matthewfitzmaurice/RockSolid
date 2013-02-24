@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include Config.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="$(var.Property_ProductName)" Language="1033" Version="$(var.Property_ProductVersion)" Manufacturer="Matthew Fitzmaurice" UpgradeCode="2CF50161-DC9F-4E67-8C22-5B4718E73DB9">
+    <Package InstallerVersion="300" Comments="Version: $(var.Property_ProductVersion)" Compressed="yes" InstallPrivileges="elevated" />
+    <Media Id="1" Cabinet="setup.cab" EmbedCab="yes" />
+
+    <Condition Message="[AdminMessage]">Privileged</Condition>
+    <Condition Message="A later version of [ProductName] is already installed.">NOT NEWERVERSIONDETECTED</Condition>
+
+    <Upgrade Id="2CF50161-DC9F-4E67-8C22-5B4718E73DB9">
+      <UpgradeVersion Minimum="$(var.Property_ProductVersion)" Property="NEWERVERSIONDETECTED" OnlyDetect="yes" IncludeMinimum="yes" />
+      <UpgradeVersion Minimum="0.0.0.0" Maximum="$(var.Property_ProductVersion)" Property="OLDERVERSIONBEINGUPGRADED" IncludeMinimum="yes" />
+    </Upgrade>
+
+    <Feature Id="CompleteFeature" Title="Complete" Level="1" AllowAdvertise="no">
+      <ComponentRef Id="RockSolidOfficeFolder" />
+      <ComponentRef Id="log4net" />
+      <ComponentRef Id="WordAddin" />
+      <ComponentRef Id="Template" />
+    </Feature>
+
+    <InstallExecuteSequence>
+      <SelfRegModules Sequence="5600" />
+      <SelfUnregModules Sequence="2200" />
+      <RemoveExistingProducts After="InstallInitialize" />
+
+      <Custom Action="CA.WordAddin.Uninstall.SetProperty" After="MsiUnpublishAssemblies">$WordAddin=2</Custom>
+      <Custom Action="CA.WordAddin.Uninstall" After="CA.WordAddin.Uninstall.SetProperty">$WordAddin=2</Custom>
+      <Custom Action="CA.WordAddin.Install.SetProperty" After="SelfRegModules">$WordAddin&gt;2</Custom>
+      <Custom Action="CA.WordAddin.Install" After="CA.WordAddin.Install.SetProperty">$WordAddin&gt;2</Custom>
+
+    </InstallExecuteSequence>
+
+    <UIRef Id="UI_RockSolid"/>
+
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="RockSolidOffice">
+          <Component Id="RockSolidOfficeFolder" Guid="74BDAE05-123B-4E10-824B-8EAD53B22293" KeyPath="yes">
+            <CreateFolder Directory="INSTALLFOLDER" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+
+    <Binary Id="MacroView.CA" SourceFile="Binary\MacroView.WindowsInstaller.Actions.CA.dll" />
+    <Property Id="ALLUSERS" Value="1" />
+    <Property Id="ARPHELPLINK" Value="http://www.matthewfitzmaurice.com" />
+    <Property Id="ARPURLINFOABOUT" Value="http://www.matthewfitzmaurice.com" />
+    <Property Id="ARPURLUPDATEINFO" Value="http://www.matthewfitzmaurice.com" />
+    <Property Id="AdminMessage" Value="Setup requires user to be in the administrator group in order to continue the installation process. Setup is aborting as the current user is not in the administrator group." />
+    <Property Id="OLDERVERSIONBEINGUPGRADED" Secure="yes" />
+    <Property Id="NEWERVERSIONDETECTED" Secure="yes" />
+    <Property Id="INSTALLFOLDER" Secure="yes" />
+    <Property Id="TARGETDIR" Secure="yes" />
+    <Property Id="USERNAME" Secure="yes" />
+    <Property Id="ROOTDRIVE" Secure="yes" />
+    <!--<Property Id="MacroViewPublicKey"><![CDATA[<RSAKeyValue><Modulus>4UiTb9t3Xwg/It2sbqlSAESNWnkov16uBp+5lPLdYGRILB5xEjFACiBNCDCrHJKTRcEOSfg49l0shvAWAyjnac5dzbsfE5d1tw36Jjqol7xWgxxKcvtjYhC+ko9s0ezEpEZPkj20MuFSwLEfxuUEsDglAex7/EeirgUKiiLuiJs=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>]]></Property>-->
+    <Property Id="WORDVER" Secure="yes">
+      <RegistrySearch Id="CHKWORDVER" Root="HKLM" Key="SOFTWARE\Classes\Word.Application\CurVer" Type="raw" />
+    </Property>
+
+  </Fragment>
+
+</Wix>

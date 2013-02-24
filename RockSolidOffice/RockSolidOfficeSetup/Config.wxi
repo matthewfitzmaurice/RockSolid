@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <!-- Increment the ProductVersion when building a release -->
+  <?define Property_ProductVersion = "!(bind.FileVersion.RockSolidOffice.dll)" ?>
+  <!-- Platform variables -->
+  <?if $(var.Platform) = x64 ?>
+  <?define Property_ProductName = "RockSolid Office (x64)" ?>
+  <?define Property_Win64 = "yes" ?>
+  <?define Property_ProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+  <?define Property_ProductName = "RockSolid Office" ?>
+  <?define Property_Win64 = "no" ?>
+  <?define Property_ProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+</Include>

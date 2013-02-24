@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+
+  <ribbon>
+    <tabs>
+      <tab id="RockSolidTab" label="RockSolid">
+        <group id="TemplatesGroup" label="Templates">
+          <button id="NewProposal1" label="Proposal" imageMso="FileNew" onAction="NewProposal_Click" keytip="P" size="large"/>
+        </group>
+        <group id="ProposalGroup" label="Proposal" getVisible="IsProposal">
+          <button id="UpdateInvestmentSchedule" label="Update Investment Schedule" imageMso="FieldsUpdate" onAction="UpdateInvestmentSchedule_Click" keytip="U" size="large"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+
+  <backstage>
+    <tab idMso="TabNew">
+      <firstColumn>
+        <group id="RockSolidTemplates" label="RockSolid Proposal Template" helperText="Press this button to create a new RockSolid Proposal document.">
+          <primaryItem>
+            <button id="NewProposal2" label="Proposal" imageMso="FileNew" onAction="NewProposal_Click" keytip="P"/>
+          </primaryItem>
+        </group>
+      </firstColumn>
+    </tab>
+  </backstage>
+
+</customUI>
+

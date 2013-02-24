@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+
+    <CustomAction Id="CA.WordAddin.Uninstall.SetProperty" Property="CA.WordAddin.Uninstall" Value="OFFICEADDINKEYNAME=RockSolidOffice" />
+    <CustomAction Id="CA.WordAddin.Uninstall" BinaryKey="MacroView.CA" DllEntry="Office14AddinRegistry_Uninstall" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="CA.WordAddin.Install.SetProperty" Property="CA.WordAddin.Install" Value="OFFICEADDINKEYNAME=RockSolidOffice" />
+    <CustomAction Id="CA.WordAddin.Install" BinaryKey="MacroView.CA" DllEntry="Office14AddinRegistry_Install" Execute="deferred" Impersonate="no" />
+
+    <DirectoryRef Id="INSTALLFOLDER">
+
+      <Component Id="WordAddin" Guid="3ABA3299-46D1-4427-A69E-45FE6D4F08B6" Transitive="yes">
+        <Condition>WORDVER = "Word.Application.14"</Condition>
+
+        <File Id="RockSolidOffice.dll" Name="RockSolidOffice.dll" KeyPath="yes" Vital="yes" DiskId="1" Source="..\RockSolidOffice\bin\RockSolidOffice.dll" />
+        <File Id="RockSolidOffice.vsto" Name="RockSolidOffice.vsto" Vital="yes" DiskId="1" Source="..\RockSolidOffice\bin\RockSolidOffice.vsto" />
+        <File Id="RockSolidOffice.dll.manifest" Name="RockSolidOffice.dll.manifest" Vital="yes" DiskId="1" Source="..\RockSolidOffice\bin\RockSolidOffice.dll.manifest" />
+        <File Id="RockSolidOffice.dll.config" Name="RockSolidOffice.dll.config" Vital="yes" DiskId="1" Source="..\RockSolidOffice\bin\RockSolidOffice.dll.config" />
+
+        <RegistryKey Action="createAndRemoveOnUninstall" Key="Software\Microsoft\Office\14.0\User Settings\RockSolidOffice\Create\Software\Microsoft\Office\Word\Addins\RockSolidOffice" Root="HKLM">
+          <RegistryValue Name="CommandLineSafe" Value="1" Type="integer" />
+          <RegistryValue Name="LoadBehavior" Value="3" Type="integer" />
+          <RegistryValue Name="FriendlyName" Value="RockSolid Word" Type="string" />
+          <RegistryValue Name="Description" Value="Rock Solid add-in for Word" Type="string" />
+          <RegistryValue Name="Manifest" Value="[INSTALLFOLDER]RockSolidOffice.vsto|vstolocal" Type="string" />
+        </RegistryKey>
+
+        <RegistryKey Action="createAndRemoveOnUninstall" Key="Software\Microsoft\Office\14.0\User Settings\RockSolidOffice\Create\Software\Microsoft\VSTO\Security\Inclusion\165C31EB-F7B2-412E-830D-7E634C727A91" Root="HKLM">
+          <RegistryValue Name="PublicKey" Value="[MacroViewPublicKey]" Type="string" />
+          <RegistryValue Name="Url" Value="file:///[#RockSolidOffice.vsto]" Type="string" />
+        </RegistryKey>
+
+      </Component>
+
+      <Component Id="log4net" Guid="29FCC8CD-9812-4C31-BCB4-5ADE3428271D">
+        <File Id="log4net.dll" Name="log4net.dll" KeyPath="yes" Vital="yes" DiskId="1" Source="..\RockSolidOffice\bin\log4net.dll" />
+      </Component>
+
+      <Component Id="Template" Guid="DBCCF9D0-C1FA-4F6F-9E9E-6C2D4E095026">
+        <File Id="RockSolidProposal.dotx" Name="RockSolid CMS - Proposal template 2013.dotx" KeyPath="yes" Vital="yes" DiskId="1" Source="..\RockSolidOffice\Templates\RockSolid CMS - Proposal template 2013.dotx" />
+      </Component>
+
+    </DirectoryRef>
+  </Fragment>
+</Wix>
